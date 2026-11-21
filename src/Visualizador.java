@@ -8,10 +8,16 @@ public class Visualizador {
 
     private final Laberinto lab;
     private final Scanner sc;
+    private long tiempoNanos = -1;
 
     public Visualizador(Laberinto lab, Scanner sc) {
         this.lab = lab;
         this.sc = sc;
+    }
+
+    // Tiempo guardado del algoritmo que se va a mostrar. -1 si no hay.
+    public void setTiempoNanos(long nanos) {
+        this.tiempoNanos = nanos;
     }
 
     // Opciones 2, 3 y 4. Se llama justo despues de correr el algoritmo,
@@ -40,6 +46,9 @@ public class Visualizador {
         } else {
             System.out.println("No existe camino entre la entrada y la salida.");
         }
+        if (tiempoNanos >= 0) {
+            System.out.println("Tiempo de busqueda, " + Resultado.textoTiempo(tiempoNanos));
+        }
         System.out.print("Enter para volver al menu. ");
         sc.nextLine();
     }
@@ -57,6 +66,7 @@ public class Visualizador {
         if (r.haySolucion()) {
             System.out.println("Longitud del camino, " + r.longitud() + " movimientos.");
         }
+        System.out.println("Tiempo de busqueda, " + Resultado.textoTiempo(r.getNanos()));
         System.out.println();
     }
 
