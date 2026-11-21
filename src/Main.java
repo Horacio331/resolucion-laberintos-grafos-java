@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -17,19 +18,19 @@ public class Main {
                 case 2 -> {
                     if (hayLaberinto()) {
                         rDfs = correrDFS();
-                        new Visualizador(lab, sc).despliegaLaberinto(rDfs.getVisita());
+                        animar(sc, rDfs);
                     }
                 }
                 case 3 -> {
                     if (hayLaberinto()) {
                         rBfs = correrBFS();
-                        new Visualizador(lab, sc).despliegaLaberinto(rBfs.getVisita());
+                        animar(sc, rBfs);
                     }
                 }
                 case 4 -> {
                     if (hayLaberinto()) {
                         rDij = correrDijkstra();
-                        new Visualizador(lab, sc).despliegaLaberinto(rDij.getVisita());
+                        animar(sc, rDij);
                     }
                 }
                 case 5 -> mostrarTodas(sc);
@@ -88,9 +89,15 @@ public class Main {
         }
     }
 
+    private static void animar(Scanner sc, Resultado r) {
+        Visualizador viz = new Visualizador(lab, sc);
+        viz.setTiempoNanos(r.getNanos());
+        viz.despliegaLaberinto(r.getVisita());
+    }
+
     private static void mostrarTodas(Scanner sc) {
         if (!hayLaberinto()) return;
-        // Solo se ejecutan los que faltan, los demas se reutilizan
+        // Solo se ejecutan los que faltan, los demas se reutilizan con su tiempo guardado
         if (rDfs == null) rDfs = correrDFS();
         if (rBfs == null) rBfs = correrBFS();
         if (rDij == null) rDij = correrDijkstra();
@@ -101,18 +108,28 @@ public class Main {
         viz.muestraResultado(rDij);
     }
 
+    // El tiempo cubre solo la busqueda y la reconstruccion del camino
     private static Resultado correrDFS() {
         Grafo g = lab.getGrafo();
-        return new Resultado("DFS", g.DFS(), g);
+        long t0 = System.nanoTime();
+        List<Vertice> visita = g.DFS();
+        long t = System.nanoTime() - t0;
+        return new Resultado("DFS", visita, g, t);
     }
 
     private static Resultado correrBFS() {
         Grafo g = lab.getGrafo();
-        return new Resultado("BFS", g.BFS(), g);
+        long t0 = System.nanoTime();
+        List<Vertice> visita = g.BFS();
+        long t = System.nanoTime() - t0;
+        return new Resultado("BFS", visita, g, t);
     }
 
     private static Resultado correrDijkstra() {
         Grafo g = lab.getGrafo();
-        return new Resultado("Dijkstra", g.caminoMasCorto(), g);
+        long t0 = System.nanoTime();
+        List<Vertice> visita = g.caminoMasCorto();
+        long t = System.nanoTime() - t0;
+        return new Resultado("Dijkstra", visita, g, t);
     }
 }
