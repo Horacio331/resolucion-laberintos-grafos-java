@@ -8,7 +8,7 @@ El programa carga un laberinto desde un archivo de texto, lo representa como un 
 
 Horacio Duran Salido. El proyecto pedía equipos de dos personas, pero lo realicé de forma individual, así que todas las responsabilidades son mías, desde el diseño de las clases y los algoritmos hasta las pruebas y la documentación.
 
-Fecha de entrega, 21/11/2026.
+Fecha de entrega, 22/11/2026.
 
 ## Requisitos
 
@@ -111,6 +111,8 @@ La carpeta `ejemplos` contiene laberintos de prueba válidos e inválidos, entre
 ## Extras implementados
 
 - Tiempos de solución con `System.nanoTime()`.
+- Archivo README.md con la documentación del proyecto.
+- Declaración de uso de IA.
 
 ## Declaración de uso de IA
 
